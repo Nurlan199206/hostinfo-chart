@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "hostinfo-chart.fullname" . }}
+  labels:
+{{ include "hostinfo-chart.labels" . | indent 4 }}
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+    - port: {{ .Values.service.port }}
+      nodePort: {{ .Values.service.nodePort }}
+  selector:
+    app.kubernetes.io/name: {{ include "hostinfo-chart.name" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
